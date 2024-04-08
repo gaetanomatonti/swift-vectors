@@ -88,5 +88,5 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-/.swiftpm
-/.DS_Store
+.swiftpm
+*.DS_Store
