@@ -34,6 +34,12 @@ final class swift_vectorsTests: XCTestCase {
     XCTAssertEqual(b.magnitude, 0)
   }
 
+  func testHeading() {
+    let a = Vector(x: 4, y: -4)
+
+    XCTAssertEqual(a.heading.degrees, -45)
+  }
+
   func testNormalization() {
     let a = Vector(x: 3, y: 4)
     let b = Vector(x: 0.5, y: 0.5)

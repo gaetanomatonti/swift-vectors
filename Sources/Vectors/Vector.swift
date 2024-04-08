@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // A structure that contains coordinates for a Cartesian two-dimensional coordinate system.
 public typealias Vector = CGPoint
@@ -72,6 +73,13 @@ public extension Vector {
   /// Returns the magnitude (or length) of the vector.
   var magnitude: CGFloat {
     sqrt(x * x + y * y)
+  }
+
+  /// The heading (direction) of the vector expressed as an angle.
+  /// - Returns: An `Angle` between `-π` and `π`.
+  var heading: Angle {
+    let angle = atan2(y, x)
+    return Angle(radians: angle)
   }
 
   /// Scales the vector to avoid exceeding the passed maximum magnitude.
