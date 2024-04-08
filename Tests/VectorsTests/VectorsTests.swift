@@ -1,7 +1,7 @@
 import XCTest
 @testable import Vectors
 
-final class swift_vectorsTests: XCTestCase {
+final class VectorsTests: XCTestCase {
   func testSum() {
     let a = Vector(x: 1, y: 2)
     let b = Vector(x: 3, y: 4)
@@ -11,7 +11,16 @@ final class swift_vectorsTests: XCTestCase {
   func testSubtraction() {
     let a = Vector(x: 1, y: 2)
     let b = Vector(x: 3, y: 4)
-    XCTAssertEqual(a - b, Vector(x: -2, y: -2))
+
+    XCTAssertEqual(b - a, Vector(x: 2, y: 2))
+  }
+
+  func testDirectionOfSubtraction() {
+    let a = Vector(x: 1, y: 2)
+    let b = Vector(x: 3, y: 4)
+
+    XCTAssertEqual((b - a).heading, .degrees(45))
+    XCTAssertEqual((a - b).heading, .degrees(-135))
   }
 
   func testScalarMultiplication() {

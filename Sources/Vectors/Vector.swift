@@ -38,6 +38,20 @@ public extension Vector {
   }
 
   /// Subtracts a vector to this vector.
+  ///
+  /// Vector subtraction can be used to find the path between two points.
+  /// The direction of the resulting vector depends on the order of the operands;
+  /// the head of the resulting vector coincides with the head of the left-hand operator,
+  /// meaning that the resulting vector heads towards the left-hand operator.
+  ///
+  /// ```swift
+  /// /// Vector pointing from a to b
+  /// let c = b - a
+  ///
+  /// // Vector pointing from b to a
+  /// let c = a - b
+  /// ```
+  ///
   /// - Returns: The vector resulting from the subtraction of the vectors.
   func subtracting(_ vector: Vector) -> Vector {
     Vector(x: x - vector.x, y: y - vector.y)
