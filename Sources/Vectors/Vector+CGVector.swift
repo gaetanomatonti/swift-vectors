@@ -18,4 +18,8 @@ extension CGVector: Vector {
       dy = newValue
     }
   }
+
+  public init(x: CGFloat, y: CGFloat) {
+    self.init(dx: x, dy: y)
+  }
 }

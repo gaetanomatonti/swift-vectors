@@ -9,9 +9,24 @@ public protocol Vector {
   /// The y component of the vector.
   var y: CGFloat { get set }
 
+  /// Creates a vector with the specified components.
+  /// - Parameters:
+  ///   - x: The x component of the vector.
+  ///   - y: The y component of the vector.
+  init(x: CGFloat, y: CGFloat)
+}
+
+// MARK: - Operators
+
+public extension Vector {
   /// Adds a vector to this vector.
   /// - Returns: The vector resulting from the sum of the vectors.
-  func adding(_ vector: some Vector) -> Self
+  func adding(_ vector: some Vector) -> Self {
+    var resultingVector = self
+    resultingVector.x += vector.x
+    resultingVector.y += vector.y
+    return resultingVector
+  }
 
   /// Subtracts a vector to this vector.
   ///
@@ -29,60 +44,6 @@ public protocol Vector {
   /// ```
   ///
   /// - Returns: The vector resulting from the subtraction of the vectors.
-  func subtracting(_ vector: some Vector) -> Self
-
-  /// Multiplies (or scales) the vector by a scalar.
-  /// - Returns: The scaled vector.
-  func multiplied(by scalar: CGFloat) -> Self
-
-  /// Divides (or scales) the vector by a scalar.
-  /// - Returns: The scaled vector.
-  func divided(by scalar: CGFloat) -> Self
-
-  /// Adds a vector to this vector.
-  /// - Returns: The vector resulting from the sum of the vectors.
-  static func +(lhs: Self, rhs: some Vector) -> Self
-
-  /// Subtracts a vector to this vector.
-  /// - Returns: The vector resulting from the subtraction of the vectors.
-  static func -(lhs: Self, rhs: some Vector) -> Self
-
-  /// Multiplies (or scales) the vector by a scalar.
-  /// - Returns: The scaled vector.
-  static func *(vector: Self, scalar: CGFloat) -> Self
-
-  /// Divides (or scales) the vector by a scalar.
-  /// - Returns: The scaled vector.
-  static func /(vector: Self, scalar: CGFloat) -> Self
-
-  // MARK: - Helpers
-
-  /// Returns a vector normalized to a unit length of 1.
-  var normalized: Self { get }
-
-  /// Returns the magnitude (or length) of the vector.
-  var magnitude: CGFloat { get }
-
-  /// The heading (direction) of the vector expressed as an angle.
-  /// - Returns: An `Angle` in the range `[-π, π]`.
-  var heading: Angle { get }
-
-  /// Scales the vector to avoid exceeding the passed maximum magnitude.
-  /// - Parameter maximum: The maximum magnitude of the vector.
-  /// - Returns: The scaled vector, if it exceeds the passed magnitude.
-  func limit(_ maximum: CGFloat) -> Self
-}
-
-// MARK: - Operators
-
-public extension Vector {
-  func adding(_ vector: some Vector) -> Self {
-    var resultingVector = self
-    resultingVector.x += vector.x
-    resultingVector.y += vector.y
-    return resultingVector
-  }
-
   func subtracting(_ vector: some Vector) -> Self {
     var resultingVector = self
     resultingVector.x -= vector.x
@@ -90,6 +51,8 @@ public extension Vector {
     return resultingVector
   }
 
+  /// Multiplies (or scales) the vector by a scalar.
+  /// - Returns: The scaled vector.
   func multiplied(by scalar: CGFloat) -> Self {
     var resultingVector = self
     resultingVector.x *= scalar
@@ -97,6 +60,8 @@ public extension Vector {
     return resultingVector
   }
 
+  /// Divides (or scales) the vector by a scalar.
+  /// - Returns: The scaled vector.
   func divided(by scalar: CGFloat) -> Self {
     var resultingVector = self
     resultingVector.x /= scalar
@@ -104,18 +69,26 @@ public extension Vector {
     return resultingVector
   }
 
+  /// Adds a vector to this vector.
+  /// - Returns: The vector resulting from the sum of the vectors.
   static func +(lhs: Self, rhs: some Vector) -> Self {
     lhs.adding(rhs)
   }
 
+  /// Subtracts a vector to this vector.
+  /// - Returns: The vector resulting from the subtraction of the vectors.
   static func -(lhs: Self, rhs: some Vector) -> Self {
     lhs.subtracting(rhs)
   }
 
+  /// Multiplies (or scales) the vector by a scalar.
+  /// - Returns: The scaled vector.
   static func *(vector: Self, scalar: CGFloat) -> Self {
     vector.multiplied(by: scalar)
   }
 
+  /// Divides (or scales) the vector by a scalar.
+  /// - Returns: The scaled vector.
   static func /(vector: Self, scalar: CGFloat) -> Self {
     vector.divided(by: scalar)
   }
@@ -124,6 +97,7 @@ public extension Vector {
 // MARK: - Helpers
 
 public extension Vector {
+  /// Returns a vector normalized to a unit length of 1.
   var normalized: Self {
     let magnitude = self.magnitude
 
@@ -134,15 +108,21 @@ public extension Vector {
     return self / magnitude
   }
 
+  /// Returns the magnitude (or length) of the vector.
   var magnitude: CGFloat {
     sqrt(x * x + y * y)
   }
 
+  /// The heading (direction) of the vector expressed as an angle.
+  /// - Returns: An `Angle` in the range `[-π, π]`.
   var heading: Angle {
     let angle = atan2(y, x)
     return Angle(radians: angle)
   }
 
+  /// Scales the vector to avoid exceeding the passed maximum magnitude.
+  /// - Parameter maximum: The maximum magnitude of the vector.
+  /// - Returns: The scaled vector, if it exceeds the passed magnitude.
   func limit(_ maximum: CGFloat) -> Self {
     guard magnitude > maximum else {
       return self
@@ -151,3 +131,4 @@ public extension Vector {
     return normalized * maximum
   }
 }
+
