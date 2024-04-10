@@ -9,6 +9,12 @@ public protocol Vector {
   /// The y component of the vector.
   var y: CGFloat { get set }
 
+  /// Creates a vector with the specified components.
+  /// - Parameters:
+  ///   - x: The x component of the vector.
+  ///   - y: The y component of the vector.
+  init(x: CGFloat, y: CGFloat)
+
   /// Adds a vector to this vector.
   /// - Returns: The vector resulting from the sum of the vectors.
   func adding(_ vector: some Vector) -> Self
