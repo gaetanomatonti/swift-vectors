@@ -85,7 +85,7 @@ let vector = CGPoint(x: 6.0, y: 3.0) - CGPoint(x: 3.0, y: 3.0)            // CGP
 ```
 
 #### Scale (Multiplication and Division)
-Scales the vector up (multiplication) or down (division).
+Scales the vector up or down by a scalar.
 
 ```swift
 let doubledVector = CGPoint(x: 2.0, y: 2.0) * 2.0                         // CGPoint(x: 4.0, y: 4.0)
