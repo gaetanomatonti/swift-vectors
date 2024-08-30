@@ -18,13 +18,19 @@ let package = Package(
       targets: ["Vectors"]
     ),
   ],
+  dependencies: [
+    .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2")
+  ],
   targets: [
     .target(
       name: "Vectors"
     ),
     .testTarget(
       name: "VectorsTests",
-      dependencies: ["Vectors"]
+      dependencies: [
+        "Vectors",
+        .product(name: "Numerics", package: "swift-numerics"),
+      ]
     ),
   ]
 )
