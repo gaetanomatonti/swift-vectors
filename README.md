@@ -1,6 +1,6 @@
 # Vectors
 
-`Vectors` is a Swift Package that extends the capabilities of some `CoreGraphics` types with 2D vector operations.
+`Vectors` is a Swift Package that extends the capabilities of some `Foundation` types with 2D vector operations.
 
 ## Features
 - **Arithmetic operations**: Perform addition, subtraction, multiplication, and division.
