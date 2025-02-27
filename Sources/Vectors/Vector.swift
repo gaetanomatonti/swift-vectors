@@ -92,6 +92,22 @@ public extension Vector {
   static func /(vector: Self, scalar: CGFloat) -> Self {
     vector.divided(by: scalar)
   }
+  
+  static func +=(lhs: inout Self, rhs: some Vector) {
+    lhs = lhs + rhs
+  }
+  
+  static func -=(lhs: inout Self, rhs: some Vector) {
+    lhs = lhs - rhs
+  }
+  
+  static func *=(lhs: inout Self, rhs: CGFloat) {
+    lhs = lhs * rhs
+  }
+  
+  static func /=(lhs: inout Self, rhs: CGFloat) {
+    lhs = lhs / rhs
+  }
 }
 
 // MARK: - Helpers
@@ -112,6 +128,11 @@ public extension Vector {
   var magnitude: CGFloat {
     sqrt(x * x + y * y)
   }
+  
+  /// Returns the length (or magnitude) of the vector.
+  var length: CGFloat {
+    magnitude
+  }
 
   /// The heading (direction) of the vector expressed as an angle.
   /// - Returns: An `Angle` in the range `[-π, π]`.
@@ -130,5 +151,8 @@ public extension Vector {
 
     return normalized * maximum
   }
+  
+  mutating func normalize() {
+    self = normalized
+  }
 }
-
