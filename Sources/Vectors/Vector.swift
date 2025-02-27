@@ -115,13 +115,9 @@ public extension Vector {
 public extension Vector {
   /// Returns a vector normalized to a unit length of 1.
   var normalized: Self {
-    let magnitude = self.magnitude
-
-    guard magnitude > .zero else {
-      return self
-    }
-
-    return self / magnitude
+    var vector = self
+    vector.normalize()
+    return vector
   }
 
   /// Returns the magnitude (or length) of the vector.
@@ -134,29 +130,38 @@ public extension Vector {
     magnitude
   }
 
-  /// The heading (direction) of the vector expressed as an angle.
+  /// The heading (i.e.: direction) of the vector expressed as an angle.
   /// - Returns: An `Angle` in the range `[-π, π]`.
   var heading: Angle {
     let angle = atan2(y, x)
     return Angle(radians: angle)
   }
 
-  /// Scales the vector to avoid exceeding the passed maximum magnitude.
-  /// - Parameter maximum: The maximum magnitude of the vector.
-  /// - Returns: The scaled vector, if it exceeds the passed magnitude.
-  mutating func limit(to length: CGFloat) {
-    self = limited(to: length)
-  }
-  
   func limited(to length: CGFloat) -> Self {
+    var vector = self
+    vector.limit(to: length)
+    return vector
+  }
+
+  /// Scales the vector to avoid exceeding the specified length.
+  /// - Parameter length: The maximum length of the vector.
+  /// - Returns: The scaled vector, if it exceeds the specified length.
+  mutating func limit(to length: CGFloat) {
     guard magnitude > length else {
-      return self
+      return
     }
 
-    return normalized * length
+    normalize()
+    self *= length
   }
-  
+
   mutating func normalize() {
-    self = normalized
+    let magnitude = self.magnitude
+
+    guard magnitude > .zero else {
+      return
+    }
+
+    self /= magnitude
   }
 }
