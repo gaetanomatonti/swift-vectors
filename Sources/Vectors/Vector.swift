@@ -144,12 +144,16 @@ public extension Vector {
   /// Scales the vector to avoid exceeding the passed maximum magnitude.
   /// - Parameter maximum: The maximum magnitude of the vector.
   /// - Returns: The scaled vector, if it exceeds the passed magnitude.
-  func limit(_ maximum: CGFloat) -> Self {
-    guard magnitude > maximum else {
+  mutating func limit(to length: CGFloat) {
+    self = limited(to: length)
+  }
+  
+  func limited(to length: CGFloat) -> Self {
+    guard magnitude > length else {
       return self
     }
 
-    return normalized * maximum
+    return normalized * length
   }
   
   mutating func normalize() {

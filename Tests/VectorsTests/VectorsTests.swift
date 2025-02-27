@@ -121,8 +121,23 @@ import Testing
     let b = CGPoint(x: 3, y: 4)
     let c = CGPoint(x: 2, y: 1)
 
-    #expect(a.limit(5) == CGPoint(x: 3, y: 4), "The components of the vector should change if its length exceeds the specified limit.")
-    #expect(b.limit(6) == CGPoint(x: 3, y: 4), "The components of the vector should change only if its length exceeds the specified limit.")
-    #expect(c.limit(6) == CGPoint(x: 2, y: 1), "The components of the vector should change only if its length exceeds the specified limit.")
+    #expect(a.limited(to: 5) == CGPoint(x: 3, y: 4), "The components of the vector should change if its length exceeds the specified limit.")
+    #expect(b.limited(to: 6) == CGPoint(x: 3, y: 4), "The components of the vector should change only if its length exceeds the specified limit.")
+    #expect(c.limited(to: 6) == CGPoint(x: 2, y: 1), "The components of the vector should change only if its length exceeds the specified limit.")
+  }
+  
+  @Test func mutableLimit() {
+    var a = CGPoint(x: 6, y: 8)
+    a.limit(to: 5)
+    
+    var b = CGPoint(x: 3, y: 4)
+    b.limit(to: 6)
+    
+    var c = CGPoint(x: 2, y: 1)
+    c.limit(to: 6)
+
+    #expect(a == CGPoint(x: 3, y: 4), "The components of the vector should change if its length exceeds the specified limit.")
+    #expect(b == CGPoint(x: 3, y: 4), "The components of the vector should change only if its length exceeds the specified limit.")
+    #expect(c == CGPoint(x: 2, y: 1), "The components of the vector should change only if its length exceeds the specified limit.")
   }
 }
