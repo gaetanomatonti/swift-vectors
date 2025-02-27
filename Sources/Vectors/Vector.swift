@@ -113,7 +113,7 @@ public extension Vector {
 // MARK: - Helpers
 
 public extension Vector {
-  /// Returns a vector normalized to a unit length of 1.
+  /// Returns a vector normalized to a unit length of `1`.
   var normalized: Self {
     var vector = self
     vector.normalize()
@@ -137,6 +137,9 @@ public extension Vector {
     return Angle(radians: angle)
   }
 
+  /// Returns the vector scaled to avoid exceeding the specified length.
+  /// - Parameter length: The maximum length of the vector.
+  /// - Returns: The scaled vector, if it exceeds the specified length.
   func limited(to length: CGFloat) -> Self {
     var vector = self
     vector.limit(to: length)
@@ -155,6 +158,7 @@ public extension Vector {
     self *= length
   }
 
+  /// Normalizes the vector to a length of `1`.
   mutating func normalize() {
     let magnitude = self.magnitude
 
