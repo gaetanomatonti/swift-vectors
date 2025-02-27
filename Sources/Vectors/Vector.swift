@@ -92,43 +92,80 @@ public extension Vector {
   static func /(vector: Self, scalar: CGFloat) -> Self {
     vector.divided(by: scalar)
   }
+  
+  static func +=(lhs: inout Self, rhs: some Vector) {
+    lhs = lhs + rhs
+  }
+  
+  static func -=(lhs: inout Self, rhs: some Vector) {
+    lhs = lhs - rhs
+  }
+  
+  static func *=(lhs: inout Self, rhs: CGFloat) {
+    lhs = lhs * rhs
+  }
+  
+  static func /=(lhs: inout Self, rhs: CGFloat) {
+    lhs = lhs / rhs
+  }
 }
 
 // MARK: - Helpers
 
 public extension Vector {
-  /// Returns a vector normalized to a unit length of 1.
+  /// Returns a vector normalized to a unit length of `1`.
   var normalized: Self {
-    let magnitude = self.magnitude
-
-    guard magnitude > .zero else {
-      return self
-    }
-
-    return self / magnitude
+    var vector = self
+    vector.normalize()
+    return vector
   }
 
   /// Returns the magnitude (or length) of the vector.
   var magnitude: CGFloat {
     sqrt(x * x + y * y)
   }
+  
+  /// Returns the length (or magnitude) of the vector.
+  var length: CGFloat {
+    magnitude
+  }
 
-  /// The heading (direction) of the vector expressed as an angle.
+  /// The heading (i.e.: direction) of the vector expressed as an angle.
   /// - Returns: An `Angle` in the range `[-π, π]`.
   var heading: Angle {
     let angle = atan2(y, x)
     return Angle(radians: angle)
   }
 
-  /// Scales the vector to avoid exceeding the passed maximum magnitude.
-  /// - Parameter maximum: The maximum magnitude of the vector.
-  /// - Returns: The scaled vector, if it exceeds the passed magnitude.
-  func limit(_ maximum: CGFloat) -> Self {
-    guard magnitude > maximum else {
-      return self
+  /// Returns the vector scaled to avoid exceeding the specified length.
+  /// - Parameter length: The maximum length of the vector.
+  /// - Returns: The scaled vector, if it exceeds the specified length.
+  func limited(to length: CGFloat) -> Self {
+    var vector = self
+    vector.limit(to: length)
+    return vector
+  }
+
+  /// Scales the vector to avoid exceeding the specified length.
+  /// - Parameter length: The maximum length of the vector.
+  /// - Returns: The scaled vector, if it exceeds the specified length.
+  mutating func limit(to length: CGFloat) {
+    guard magnitude > length else {
+      return
     }
 
-    return normalized * maximum
+    normalize()
+    self *= length
+  }
+
+  /// Normalizes the vector to a length of `1`.
+  mutating func normalize() {
+    let magnitude = self.magnitude
+
+    guard magnitude > .zero else {
+      return
+    }
+
+    self /= magnitude
   }
 }
-
